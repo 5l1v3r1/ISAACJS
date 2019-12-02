@@ -1,10 +1,10 @@
 # ISAACJS
 
-This a javascript implementation of the [ISAAC CSPRNG](https://burtleburtle.net/bob/rand/isaacafa.html).
+This is a javascript implementation of the [ISAAC CSPRNG](https://burtleburtle.net/bob/rand/isaacafa.html).
 
-It's ~62.67% faster than the [readable implementation by rubycon](https://github.com/rubycon/isaac.js). Which means it has by no means been made with the intention of being readable.
+It's ~62.67% faster than the [readable implementation by rubycon](https://github.com/rubycon/isaac.js), which means it has not been made with the intention of being readable.
 
-## Useage
+## Usage
 
 Create an instance of ISAAC with or without a seed.
 ```JS
