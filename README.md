@@ -2,7 +2,9 @@
 
 This is a javascript implementation of the [ISAAC CSPRNG](https://burtleburtle.net/bob/rand/isaacafa.html).
 
-It's ~62.67% faster than the [readable implementation by rubycon](https://github.com/rubycon/isaac.js), which means it has not been made with the intention of being readable.
+It's ~261.95% faster than the [readable implementation by rubycon](https://github.com/rubycon/isaac.js) at tumbling, and ~231.88% faster at returning random numbers.
+
+Do to the focus on speed ISAACJS has not been made with the intention of being readable.
 
 ## Usage
 
