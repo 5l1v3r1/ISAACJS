@@ -174,14 +174,14 @@ ISAAC.prototype.RandFloatExact = function () {
 };
 ISAAC.prototype.RandRange = function (min, max) {
     if (typeof max !== "number") //Only min is defined, treat it as [0..min)
-        return (this.RandFloat() * max) | 0;
+        return (this.RandFloat() * min) | 0;
 
     var range = max - min;
     return (this.RandFloat() * range + min) | 0;
 };
 ISAAC.prototype.RandFloatRange = function (min, max) {
     if (typeof max !== "number") //Only min is defined, treat it as max.
-        return this.RandFloat() * max;
+        return this.RandFloat() * min;
 
     var range = max - min;
     return this.RandFloat() * range + min;
