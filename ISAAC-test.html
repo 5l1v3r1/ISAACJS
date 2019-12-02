@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>ISAACJS Test</title>
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#FF3333" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style type="text/css">
+        pre {
+            margin: 8px;
+            font-family: monospace;
+            font-size: initial;
+            line-height: initial;
+        }
+    </style>
+</head>
+<body>
+    <header></header>
+    <main>
+        <pre></pre>
+    </main>
+    <footer></footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.min.js" integrity="sha256-hV6Ff1ZbnLObO8BWHPZs1oA3aPZkX4bnnEKO4nX1sm0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.min.js" integrity="sha256-pMgPw2sArXEcjAzvhVgWZ4iS4Jm3NKrLG0mFWdrUwCE=" crossorigin="anonymous"></script>
+
+    <script src="ISAAC.js"></script>
+
+    <script>
+        var pre = $("pre");
+        var hash, rng, buffer;
+
+        /* RANDVECT */
+        rng = new ISAAC(new Uint32Array(ISAAC.prototype.SIZE));
+        pre.append("\r\n┌──────────────────────────────────────────────────────────────┐");
+        pre.append("\r\n│ randvect (https://burtleburtle.net/bob/rand/randvect.txt)    │");
+        pre.append("\r\n└──────────────────────────────────────────────────────────────┘\r\n");
+        buffer = "";
+        for (var iter = 0; iter < 2; iter++) {
+            rng.Isaac();
+            for (var i = 0; i < ISAAC.prototype.SIZE; i++) {
+                buffer += ("00000000" + rng.rsl[i].toString(16)).substr(-8);
+                if ((i & 7) == 7) buffer += "\r\n";
+            }
+        }
+        buffer = buffer.substr(0, buffer.length - 2); //Remove last \r\n
+        pre.append("MD5 checksum: ");
+        (hash = CryptoJS.MD5(buffer)) == "f722c2b250a7e67455c7493a16bbb888" ? pre.append("PASS [" + hash + "]\r\n\r\n") : pre.append("FAIL [" + hash + "]\r\n\r\n")
+        pre.append(buffer);
+
+        /* RANDTEST */
+        pre.append("\r\n\r\n┌──────────────────────────────────────────────────────────────┐");
+        pre.append("\r\n│ randtest (https://burtleburtle.net/bob/rand/randseed.txt)    │");
+        pre.append("\r\n└──────────────────────────────────────────────────────────────┘\r\n");
+        buffer = "";
+        var seed = ISAAC.StringToUintArray("This is <i>not</i> the right mytext.");
+        rng = new ISAAC(seed);
+        //Translated from C -> JS verbatim. It's not pretty, it's not meant to be.
+        {
+            var i, j, k;
+
+            for (i = 0, k = 0; i < 10; ++i) {
+                for (j = 0; j < rng.SIZE; ++j) {
+                    buffer += ("00000000" + rng.Rand().toString(16)).substr(-8) + " ";
+                    if (++k == 8) { k = 0; buffer += "\r\n"; }
+                }
+            }
+        }
+        buffer = buffer.substr(0, buffer.length - 2); //Remove last \r\n
+        pre.append("MD5 checksum: ");
+        (hash = CryptoJS.MD5(buffer)) == "605347ef78e064962996fff10d74f6ab" ? pre.append("PASS [" + hash + "]\r\n\r\n") : pre.append("FAIL [" + hash + "]\r\n\r\n")
+        pre.append(buffer);
+
+        /* 1,000 */
+        rng = new ISAAC(new Uint32Array(ISAAC.prototype.SIZE));
+        pre.append("\r\n\r\n┌──────────────────────────────────────────────────────────────┐");
+        pre.append("\r\n│ 1,000 runs                                                   │");
+        pre.append("\r\n└──────────────────────────────────────────────────────────────┘\r\n");
+        for (var iter = 0; iter < 1000; iter++)
+            rng.Isaac();
+        for (var i = 0; i < ISAAC.prototype.SIZE; i++) {
+            pre.append(("00000000" + rng.rsl[i].toString(16)).substr(-8));
+            if ((i & 7) == 7) pre.append("\r\n");
+        }
+    </script>
+</body>
+</html>
