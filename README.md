@@ -4,7 +4,7 @@ This is a javascript implementation of the [ISAAC CSPRNG](https://burtleburtle.n
 
 It's ~261.95% faster than the [readable implementation by rubycon](https://github.com/rubycon/isaac.js) at tumbling, and ~231.88% faster at returning random numbers.
 
-Do to the focus on speed ISAACJS has not been made with the intention of being readable.
+Due to the focus on speed ISAACJS has not been made with the intention of being readable.
 
 ## Usage
 
@@ -28,7 +28,7 @@ rng.Rand(); //Will get the next available random 32bit unsigned integer and re-t
 rng.rsl[0]; //Alternatively you can access the internal result array
 ```
 
-## Compatiability
+## Compatibility
 
 Tested and working in Chrome, Firefox, IE11, and Edge.
 
