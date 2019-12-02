@@ -37,7 +37,7 @@ ISAAC.prototype.Isaac = function () {
     c = this.c;
     mem = this.mem;
     rsl = this.rsl;
-    HALFSIZE = this.SIZE / 2;
+    HALFSIZE = this.HALFSIZE;
     MASK = this.MASK;
     SIZEL = this.SIZEL;
 
@@ -156,6 +156,34 @@ ISAAC.prototype.Init = function (flag) {
 
 ISAAC.prototype.Rand = function () {
     return !this.count-- ? (this.Isaac(), this.count = this.SIZE - 1, this.rsl[this.count]) : this.rsl[this.count];
+};
+ISAAC.prototype.RandSignedInt = function () {
+    return this.Rand() | 0;
+};
+//All numbers in Javascript are 64-bit floating point numbers (double). So 'Float' in this context really means _double_.
+ISAAC.prototype.RandFloat = function () {
+    return this.Rand() * (1.0 / 4294967295); //[0..1), ripped from https://github.com/dotnet/runtime/blob/4f9ae42d861fcb4be2fcd5d3d55d5f227d30e723/src/libraries/System.Private.CoreLib/src/System/Random.cs#L87-L92, adjusted for unsigned integers
+};
+ISAAC.prototype.RandFloatExact = function () {
+    var buffer = new ArrayBuffer(8);
+    var temp = new Uint32Array(buffer);
+    temp[0] = this.Rand();
+    temp[1] = this.Rand();
+    return new Float64Array(buffer)[0]; //Literally as random as possible. No idea what the use case for this is, oh well.
+};
+ISAAC.prototype.RandRange = function (min, max) {
+    if (typeof max !== "number") //Only min is defined, treat it as [0..min)
+        return (this.RandFloat() * max) | 0;
+
+    var range = max - min;
+    return (this.RandFloat() * range + min) | 0;
+};
+ISAAC.prototype.RandFloatRange = function (min, max) {
+    if (typeof max !== "number") //Only min is defined, treat it as max.
+        return this.RandFloat() * max;
+
+    var range = max - min;
+    return this.RandFloat() * range + min;
 };
 
 ISAAC.StringToUintArray = function (seedtext) {
