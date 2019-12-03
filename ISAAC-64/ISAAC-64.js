@@ -191,7 +191,7 @@ ISAAC64.prototype.RandSignedInt = function () {
     return res === truncate ? res : -res;
 };
 //All numbers in Javascript are 64-bit floating point numbers (double). So 'Float' in this context really means _double_.
-ISAAC64.RandFloatConstant = 1 / 18446744073709551000; //Loses 3 digits of precision as the number is > Number.MAX_SAFE_INTEGER
+ISAAC64.RandFloatConstant = 1 / 18446744073709552000; //Loses 3 digits of precision as the number is > Number.MAX_SAFE_INTEGER
 ISAAC64.prototype.RandFloat = function () {
     return Number(this.Rand()) * ISAAC64.RandFloatConstant; //[0..1),
 };
