@@ -160,12 +160,17 @@
         pre.append("\r\n\r\n┌──────────────────────────────────────────────────────────────┐");
         pre.append("\r\n│ 1,000 runs                                                   │");
         pre.append("\r\n└──────────────────────────────────────────────────────────────┘\r\n");
+        buffer = "";
         for (var iter = 0; iter < 1000; iter++)
             rng.Isaac64();
         for (var i = 0; i < ISAAC64.prototype.SIZE; i++) {
-            pre.append(("00000000" + rng.rsl[i].toString(16)).substr(-8));
-            if ((i & 7) == 7) pre.append("\r\n");
+            buffer += ("0000000000000000" + rng.rsl[i].toString(16)).substr(-16);
+            if ((i & 3) == 3) buffer += "\r\n";
         }
+        buffer = buffer.substr(0, buffer.length - 2); //Remove last \r\n
+        pre.append("MD5 checksum: ");
+        (hash = CryptoJS.MD5(buffer)) == "469b1937ef018878b24f2ef7bedaa079" ? pre.append("PASS [" + hash + "]\r\n\r\n") : pre.append("FAIL [" + hash + "]\r\n\r\n")
+        pre.append(buffer);
 
         /* Signed */
         rng = new ISAAC64(new BigUint64Array(ISAAC64.prototype.SIZE));
