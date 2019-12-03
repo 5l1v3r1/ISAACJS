@@ -6,6 +6,10 @@ It's ~261.95% faster than the [readable implementation by rubycon](https://githu
 
 Due to the focus on speed ISAACJS has not been made with the intention of being readable.
 
+## ISAAC-64
+
+I have additionally implemented ISAAC-64 using BigInt. Please for the love of god don't actually use it; it's a PoC, slow, and ridiculous.
+
 ## Usage
 
 Create an instance of ISAAC with or without a seed.

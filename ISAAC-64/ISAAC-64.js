@@ -49,29 +49,29 @@ ISAAC64.prototype.Isaac64 = function () {
         a = ~(a ^ (a << 21n));
         a += mem[j++];
         a = a & 0xFFFFFFFFFFFFFFFFn;
-        mem[i] = y = (mem[(x & MASK) >> 3n]+ a + b) & 0xFFFFFFFFFFFFFFFFn;
-        rsl[i++] = b = (mem[((y >> SIZEL) & MASK) >> 3n]+ x) & 0xFFFFFFFFFFFFFFFFn;
+        mem[i] = y = (mem[(x & MASK) >> 3n]+ a + b);
+        rsl[i++] = b = (mem[((y >> SIZEL) & MASK) >> 3n]+ x);
 
         x = mem[i];
         a ^= a >> 5n;
         a += mem[j++];
         a = a & 0xFFFFFFFFFFFFFFFFn;
-        mem[i] = y = (mem[(x & MASK) >> 3n]+ a + b) & 0xFFFFFFFFFFFFFFFFn;
-        rsl[i++] = b = (mem[((y >> SIZEL) & MASK) >> 3n]+ x) & 0xFFFFFFFFFFFFFFFFn;
+        mem[i] = y = mem[(x & MASK) >> 3n]+ a + b;
+        rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 3n]+ x;
 
         x = mem[i];
         a ^= a << 12n;
         a += mem[j++];
         a = a & 0xFFFFFFFFFFFFFFFFn;
-        mem[i] = y = (mem[(x & MASK) >> 3n]+ a + b) & 0xFFFFFFFFFFFFFFFFn;
-        rsl[i++] = b = (mem[((y >> SIZEL) & MASK) >> 3n]+ x) & 0xFFFFFFFFFFFFFFFFn;
+        mem[i] = y = mem[(x & MASK) >> 3n]+ a + b;
+        rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 3n]+ x;
 
         x = mem[i];
         a ^= a >> 33n;
         a += mem[j++];
         a = a & 0xFFFFFFFFFFFFFFFFn;
-        mem[i] = y = (mem[(x & MASK) >> 3n]+ a + b) & 0xFFFFFFFFFFFFFFFFn;
-        rsl[i++] = b = (mem[((y >> SIZEL) & MASK) >> 3n]+ x) & 0xFFFFFFFFFFFFFFFFn;
+        mem[i] = y = mem[(x & MASK) >> 3n]+ a + b;
+        rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 3n]+ x;
     }
 
 
@@ -80,29 +80,29 @@ ISAAC64.prototype.Isaac64 = function () {
         a = ~(a ^ (a << 21n));
         a += mem[j++];
         a = a & 0xFFFFFFFFFFFFFFFFn;
-        mem[i] = y = (mem[(x & MASK) >> 3n]+ a + b) & 0xFFFFFFFFFFFFFFFFn;
-        rsl[i++] = b = (mem[((y >> SIZEL) & MASK) >> 3n]+ x) & 0xFFFFFFFFFFFFFFFFn;
+        mem[i] = y = mem[(x & MASK) >> 3n]+ a + b;
+        rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 3n]+ x;
 
         x = mem[i];
         a ^= a >> 5n;
         a += mem[j++];
         a = a & 0xFFFFFFFFFFFFFFFFn;
-        mem[i] = y = (mem[(x & MASK) >> 3n]+ a + b) & 0xFFFFFFFFFFFFFFFFn;
-        rsl[i++] = b = (mem[((y >> SIZEL) & MASK) >> 3n]+ x) & 0xFFFFFFFFFFFFFFFFn;
+        mem[i] = y = mem[(x & MASK) >> 3n]+ a + b;
+        rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 3n]+ x;
 
         x = mem[i];
         a ^= a << 12n;
         a += mem[j++];
         a = a & 0xFFFFFFFFFFFFFFFFn;
-        mem[i] = y = (mem[(x & MASK) >> 3n]+ a + b) & 0xFFFFFFFFFFFFFFFFn;
-        rsl[i++] = b = (mem[((y >> SIZEL) & MASK) >> 3n]+ x) & 0xFFFFFFFFFFFFFFFFn;
+        mem[i] = y = mem[(x & MASK) >> 3n]+ a + b;
+        rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 3n]+ x;
 
         x = mem[i];
         a ^= a >> 33n;
         a += mem[j++];
         a = a & 0xFFFFFFFFFFFFFFFFn;
-        mem[i] = y = (mem[(x & MASK) >> 3n]+ a + b) & 0xFFFFFFFFFFFFFFFFn;
-        rsl[i++] = b = (mem[((y >> SIZEL) & MASK) >> 3n]+ x) & 0xFFFFFFFFFFFFFFFFn;
+        mem[i] = y = mem[(x & MASK) >> 3n]+ a + b;
+        rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 3n]+ x;
     }
 
     this.a = a;
