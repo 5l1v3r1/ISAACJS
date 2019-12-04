@@ -10,6 +10,8 @@ Due to the focus on speed ISAACJS has not been made with the intention of being 
 
 I have additionally implemented ISAAC-64 using BigInt. Please for the love of god don't actually use it; it's a PoC, slow, and ridiculous.
 
+ISAAC-64-fast uses a simulated 64-bit integer object by having a hi and lo 32-bit integer. It's 3x faster than the BigInt version. It's still too slow to be useful and I don't trust my hi/lo arithmetic.
+
 ## Usage
 
 Create an instance of ISAAC with or without a seed.

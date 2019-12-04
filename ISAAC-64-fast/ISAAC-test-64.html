@@ -33,7 +33,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.min.js" integrity="sha256-hV6Ff1ZbnLObO8BWHPZs1oA3aPZkX4bnnEKO4nX1sm0=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.min.js" integrity="sha256-pMgPw2sArXEcjAzvhVgWZ4iS4Jm3NKrLG0mFWdrUwCE=" crossorigin="anonymous"></script>
-
+    
+    <script src="64.js"></script>
     <script src="ISAAC-64.js"></script>
 
     <script>
@@ -138,7 +139,7 @@
         var hash, rng, buffer;
 
         /* RANDVECT */
-        rng = new ISAAC64(new BigUint64Array(ISAAC64.prototype.SIZE));
+        rng = new ISAAC64(U64.NewArray(ISAAC64.prototype.SIZE));
         pre.append("\r\n┌──────────────────────────────────────────────────────────────┐");
         pre.append("\r\n│ randvect64                                                   │");
         pre.append("\r\n└──────────────────────────────────────────────────────────────┘\r\n");
@@ -146,7 +147,7 @@
         for (var iter = 0; iter < 2; iter++) {
             rng.Isaac64();
             for (var i = 0; i < ISAAC64.prototype.SIZE; i++) {
-                buffer += ("0000000000000000" + rng.rsl[i].toString(16)).substr(-16);
+                buffer += rng.rsl[i].ToString();
                 if ((i & 3) == 3) buffer += "\r\n";
             }
         }
@@ -168,7 +169,7 @@
 
             for (i = 0, k = 0; i < 10; ++i) {
                 for (j = 0; j < rng.SIZE; ++j) {
-                    buffer += ("0000000000000000" + rng.Rand().toString(16)).substr(-16) + " ";
+                    buffer += rng.Rand().ToString() + " ";
                     if (++k == 4) { k = 0; buffer += "\r\n"; }
                 }
             }
@@ -177,7 +178,7 @@
         pre.append(buffer);
 
         /* 1,000 */
-        rng = new ISAAC64(new BigUint64Array(ISAAC64.prototype.SIZE));
+        rng = new ISAAC64(U64.NewArray(ISAAC64.prototype.SIZE));
         pre.append("\r\n\r\n┌──────────────────────────────────────────────────────────────┐");
         pre.append("\r\n│ 1,000 runs                                                   │");
         pre.append("\r\n└──────────────────────────────────────────────────────────────┘\r\n");
@@ -185,7 +186,7 @@
         for (var iter = 0; iter < 1000; iter++)
             rng.Isaac64();
         for (var i = 0; i < ISAAC64.prototype.SIZE; i++) {
-            buffer += ("0000000000000000" + rng.rsl[i].toString(16)).substr(-16);
+                buffer += rng.rsl[i].ToString();
             if ((i & 3) == 3) buffer += "\r\n";
         }
         buffer = buffer.substr(0, buffer.length - 2); //Remove last \r\n
@@ -194,7 +195,7 @@
         pre.append(buffer);
 
         /* Signed */
-        rng = new ISAAC64(new BigUint64Array(ISAAC64.prototype.SIZE));
+        rng = new ISAAC64(U64.NewArray(ISAAC64.prototype.SIZE));
         pre.append("\r\n\r\n┌──────────────────────────────────────────────────────────────┐");
         pre.append("\r\n│ Signed integers                                              │");
         pre.append("\r\n└──────────────────────────────────────────────────────────────┘\r\n");
@@ -204,8 +205,8 @@
             if ((i & 3) == 3) pre.append("\r\n");
         }
 
-        /* Floating point */
-        rng = new ISAAC64(new BigUint64Array(ISAAC64.prototype.SIZE));
+        ///* Floating point */
+        rng = new ISAAC64(U64.NewArray(ISAAC64.prototype.SIZE));
         pre.append("\r\n\r\n┌──────────────────────────────────────────────────────────────┐");
         pre.append("\r\n│ Floating point                                               │");
         pre.append("\r\n└──────────────────────────────────────────────────────────────┘\r\n");
@@ -216,7 +217,7 @@
         }
 
         /* Floating point (Exact) */
-        rng = new ISAAC64(new BigUint64Array(ISAAC64.prototype.SIZE));
+        rng = new ISAAC64(U64.NewArray(ISAAC64.prototype.SIZE));
         pre.append("\r\n\r\n┌──────────────────────────────────────────────────────────────┐");
         pre.append("\r\n│ Floating point (Exact)                                       │");
         pre.append("\r\n└──────────────────────────────────────────────────────────────┘\r\n");
@@ -226,8 +227,8 @@
             if ((i & 1) == 1) pre.append("\r\n");
         }
 
-        /* Integer range */
-        rng = new ISAAC64(new BigUint64Array(ISAAC64.prototype.SIZE));
+        ///* Integer range */
+        rng = new ISAAC64(U64.NewArray(ISAAC64.prototype.SIZE));
         pre.append("\r\n\r\n┌──────────────────────────────────────────────────────────────┐");
         pre.append("\r\n│ Integer range (-64, +64)                                     │");
         pre.append("\r\n└──────────────────────────────────────────────────────────────┘\r\n");
@@ -238,8 +239,8 @@
             if ((i & 15) == 15) pre.append("\r\n");
         }
 
-        /* Float range */
-        rng = new ISAAC64(new BigUint64Array(ISAAC64.prototype.SIZE));
+        ///* Float range */
+        rng = new ISAAC64(U64.NewArray(ISAAC64.prototype.SIZE));
         pre.append("\r\n\r\n┌──────────────────────────────────────────────────────────────┐");
         pre.append("\r\n│ Float range (-64, +64)                                       │");
         pre.append("\r\n└──────────────────────────────────────────────────────────────┘\r\n");
